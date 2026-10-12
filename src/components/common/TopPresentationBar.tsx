@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import type { ScreenId } from '../../types';
-import { Smartphone, Monitor, RotateCcw, ShieldCheck, UserCheck } from 'lucide-react';
+import { Smartphone, Monitor, RotateCcw, ShieldCheck, UserCheck, ChevronDown, ChevronUp } from 'lucide-react';
 
 export const TopPresentationBar: React.FC = () => {
   const {
@@ -14,6 +14,7 @@ export const TopPresentationBar: React.FC = () => {
     bookingsList,
   } = useApp();
 
+  const [mobileFlowExpanded, setMobileFlowExpanded] = useState(false);
   const pendingCount = bookingsList.filter((b) => b.status === 'pending').length;
 
   const screens: { id: ScreenId; num: string; label: string }[] = [
@@ -27,7 +28,7 @@ export const TopPresentationBar: React.FC = () => {
     { id: '8-track', num: '8', label: 'Tracking' },
     { id: '9-feedback', num: '9', label: 'Feedback' },
     { id: '10-thankyou', num: '10', label: 'Done' },
-    { id: 'helper-dashboard', num: '⚡', label: 'Helper Portal' },
+    { id: 'helper-dashboard', num: '⚡', label: 'Helper' },
   ];
 
   const handleReset = () => {
@@ -45,49 +46,47 @@ export const TopPresentationBar: React.FC = () => {
 
   return (
     <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-50 shadow-md">
-      {/* Pitch Header info */}
-      <div className="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center space-x-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-lg shadow-sm">
-            <ShieldCheck className="w-5 h-5" />
+      {/* Main Bar */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2">
+        {/* Brand */}
+        <div className="flex items-center space-x-2.5">
+          <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-blue-600 text-white font-bold text-sm sm:text-base shadow-sm">
+            <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-base tracking-tight text-white">Trust Aid</span>
-              <span className="text-xs bg-blue-500/20 text-blue-400 font-semibold px-2 py-0.5 rounded-full border border-blue-500/30">
-                Verified Help Near Me
+            <div className="flex items-center gap-1.5">
+              <span className="font-extrabold text-sm sm:text-base tracking-tight text-white">Trust Aid</span>
+              <span className="text-[10px] sm:text-xs bg-blue-500/20 text-blue-400 font-semibold px-1.5 py-0.5 rounded-full border border-blue-500/30 hidden xs:inline">
+                Verified Help
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 hidden sm:block">
-              Interactive Digital Prototype · Startup Pitch
-            </p>
           </div>
         </div>
 
-        {/* Live Active Role Switcher */}
+        {/* Center: Live Role Switcher */}
         <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-700/80">
           <button
             onClick={() => handleRoleToggle('customer')}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition ${
+            className={`flex items-center gap-1 px-2 sm:px-3 py-1 rounded-lg text-xs font-bold transition ${
               userRole === 'customer'
                 ? 'bg-blue-600 text-white shadow-xs'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
             <UserCheck className="w-3.5 h-3.5" />
-            <span>Customer View</span>
+            <span className="hidden sm:inline">Customer</span>
           </button>
 
           <button
             onClick={() => handleRoleToggle('helper')}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition relative ${
+            className={`flex items-center gap-1 px-2 sm:px-3 py-1 rounded-lg text-xs font-bold transition relative ${
               userRole === 'helper'
                 ? 'bg-emerald-600 text-white shadow-xs'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Helper Portal</span>
+            <span className="hidden sm:inline">Helper</span>
             {pendingCount > 0 && (
               <span className="w-4 h-4 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center font-extrabold">
                 {pendingCount}
@@ -96,50 +95,62 @@ export const TopPresentationBar: React.FC = () => {
           </button>
         </div>
 
-        {/* View mode toggle & reset */}
-        <div className="flex items-center gap-2">
+        {/* Right: View mode toggle & reset */}
+        <div className="flex items-center gap-1.5">
           <div className="bg-slate-800 p-0.5 rounded-lg flex items-center border border-slate-700 text-xs">
             <button
-              onClick={() => setIsDeviceFrameView(true)}
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md font-medium transition-all ${
-                isDeviceFrameView
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-              title="Mobile Device Wireframe View"
-            >
-              <Smartphone className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">Mobile Frame</span>
-            </button>
-            <button
               onClick={() => setIsDeviceFrameView(false)}
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md font-medium transition-all ${
+              className={`flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-md font-medium transition-all ${
                 !isDeviceFrameView
                   ? 'bg-blue-600 text-white shadow-sm'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
-              title="Responsive Desktop View"
+              title="Full Screen Modern Web View"
             >
               <Monitor className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">Desktop View</span>
+              <span className="hidden md:inline">Full Screen</span>
+            </button>
+            <button
+              onClick={() => setIsDeviceFrameView(true)}
+              className={`flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-md font-medium transition-all ${
+                isDeviceFrameView
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+              title="Mobile Device Mockup View"
+            >
+              <Smartphone className="w-3.5 h-3.5" />
+              <span className="hidden md:inline">Phone Frame</span>
             </button>
           </div>
 
           <button
             onClick={handleReset}
-            className="flex items-center gap-1 text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 transition"
-            title="Reset prototype to beginning"
+            className="hidden sm:flex items-center gap-1 text-xs text-slate-400 hover:text-white px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 transition"
+            title="Reset prototype"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Reset</span>
+          </button>
+
+          {/* Mobile Flow Toggle Button */}
+          <button
+            onClick={() => setMobileFlowExpanded(!mobileFlowExpanded)}
+            className="sm:hidden p-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white text-xs flex items-center"
+            title="Toggle screens list"
+          >
+            {mobileFlowExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
         </div>
       </div>
 
-      {/* Screen Flow Navigator */}
-      <div className="bg-slate-950/80 border-t border-slate-800/80 px-2 py-1.5 overflow-x-auto scrollbar-none">
-        <div className="max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-1.5 min-w-max px-2">
-          <span className="text-[11px] font-semibold text-slate-400 mr-1 uppercase tracking-wider">
+      {/* Screen Flow Navigator (Always on Desktop, Collapsible on Mobile) */}
+      <div
+        className={`${
+          mobileFlowExpanded ? 'block' : 'hidden sm:block'
+        } bg-slate-950/90 border-t border-slate-800/80 px-2 py-1.5 overflow-x-auto scrollbar-none transition-all`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-1 min-w-max px-2">
+          <span className="text-[10px] font-semibold text-slate-400 mr-1 uppercase tracking-wider hidden sm:inline">
             Flow:
           </span>
           {screens.map((screen) => {
@@ -147,15 +158,18 @@ export const TopPresentationBar: React.FC = () => {
             return (
               <button
                 key={screen.id}
-                onClick={() => navigateTo(screen.id)}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs transition-all font-medium ${
+                onClick={() => {
+                  navigateTo(screen.id);
+                  setMobileFlowExpanded(false);
+                }}
+                className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs transition-all font-medium ${
                   isActive
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25 ring-2 ring-blue-400'
+                    ? 'bg-blue-600 text-white shadow-sm ring-1 ring-blue-400 font-bold'
                     : 'bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
                 }`}
               >
                 <span
-                  className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                  className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[9px] font-bold ${
                     isActive ? 'bg-white text-blue-600' : 'bg-slate-800 text-slate-300'
                   }`}
                 >

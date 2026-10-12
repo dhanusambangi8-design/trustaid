@@ -24,7 +24,7 @@ export const Screen7Confirmation: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-between px-5 pt-3 pb-6 text-slate-900 bg-white">
+    <div className="flex-1 flex flex-col justify-between px-5 pt-3 pb-6 text-slate-900 bg-white overflow-y-auto overscroll-contain">
       <div>
         {/* Top Header */}
         <div className="flex items-center justify-between mb-4">

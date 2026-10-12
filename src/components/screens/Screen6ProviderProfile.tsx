@@ -18,7 +18,7 @@ export const Screen6ProviderProfile: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-between px-5 pt-3 pb-6 text-slate-900 bg-white relative">
+    <div className="flex-1 flex flex-col justify-between px-5 pt-3 pb-6 text-slate-900 bg-white relative overflow-y-auto overscroll-contain">
       {showShareToast && (
         <div className="absolute top-12 left-6 right-6 z-50 bg-slate-900 text-white text-xs py-2 px-3 rounded-lg text-center shadow-lg">
           Profile link copied to clipboard!

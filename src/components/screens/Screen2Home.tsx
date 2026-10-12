@@ -46,7 +46,7 @@ export const Screen2Home: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-between bg-white text-slate-900 relative">
+    <div className="flex-1 flex flex-col h-full bg-white text-slate-900 relative overflow-hidden">
       {/* Toast popup */}
       {showNotificationToast && (
         <div className="absolute top-14 left-4 right-4 z-50 bg-slate-900 text-white text-xs p-3 rounded-xl shadow-xl flex items-center justify-between border border-slate-700 animate-fade-in">
@@ -113,8 +113,8 @@ export const Screen2Home: React.FC = () => {
         </div>
       )}
 
-      {/* Main Content Area */}
-      <div className="px-5 pt-3 pb-4">
+      {/* Main Content Area (Scrollable) */}
+      <div className="flex-1 overflow-y-auto px-5 pt-3 pb-8 overscroll-contain">
         {/* Top App Bar */}
         <div className="flex items-center justify-between mb-4">
           <button

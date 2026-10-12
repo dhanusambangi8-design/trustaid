@@ -52,7 +52,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [bookingsList, setBookingsList] = useState<Booking[]>([INITIAL_BOOKING]);
   const [feedback, setFeedback] = useState<FeedbackData>({ rating: 5, comment: '' });
   const [activeFilterCategory, setActiveFilterCategory] = useState<string | null>(null);
-  const [isDeviceFrameView, setIsDeviceFrameView] = useState<boolean>(true);
+  const [isDeviceFrameView, setIsDeviceFrameView] = useState<boolean>(false);
 
   const navigateTo = (screen: ScreenId) => {
     setScreenHistory((prev) => [...prev, screen]);

@@ -44,7 +44,7 @@ export const Screen3RequestHelp: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-between px-5 pt-3 pb-6 text-slate-900 bg-white relative">
+    <div className="flex-1 flex flex-col justify-between px-5 pt-3 pb-6 text-slate-900 bg-white relative overflow-y-auto overscroll-contain">
       {/* Category Selection Modal Sheet */}
       {showCategoryModal && (
         <div
