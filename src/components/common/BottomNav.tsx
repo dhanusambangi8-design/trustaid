@@ -15,7 +15,8 @@ export const BottomNav: React.FC = () => {
   return (
     <nav
       aria-label="Bottom Navigation"
-      className="sticky bottom-0 inset-x-0 w-full bg-white/95 backdrop-blur-md border-t border-slate-200/90 px-4 sm:px-6 pt-2 pb-3 flex items-center justify-around z-40 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]"
+      style={{ paddingBottom: 'max(14px, env(safe-area-inset-bottom, 14px))' }}
+      className="sticky bottom-0 inset-x-0 w-full bg-white/95 backdrop-blur-md border-t border-slate-200/90 px-4 sm:px-6 pt-2.5 flex items-center justify-around z-40 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] shrink-0"
     >
       {navItems.map((item) => {
         const Icon = item.icon;

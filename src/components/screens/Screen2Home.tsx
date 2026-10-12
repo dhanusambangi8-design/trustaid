@@ -114,7 +114,7 @@ export const Screen2Home: React.FC = () => {
       )}
 
       {/* Main Content Area (Scrollable) */}
-      <div className="flex-1 overflow-y-auto px-5 pt-3 pb-8 overscroll-contain">
+      <div className="flex-1 overflow-y-auto px-5 pt-3 pb-14 overscroll-contain">
         {/* Top App Bar */}
         <div className="flex items-center justify-between mb-4">
           <button
