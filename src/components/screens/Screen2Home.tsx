@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { SERVICE_CATEGORIES, HELPERS_DATA } from '../../data/mockData';
 import { BottomNav } from '../common/BottomNav';
+import { ContactModal } from '../common/ContactModal';
 import {
   Menu,
   Bell,
@@ -12,6 +13,11 @@ import {
   FileText,
   Users,
   ChevronRight,
+  ShieldCheck,
+  Clock,
+  HeartHandshake,
+  Mail,
+  Sparkles,
 } from 'lucide-react';
 import type { ServiceCategory } from '../../types';
 
@@ -19,6 +25,7 @@ export const Screen2Home: React.FC = () => {
   const { navigateTo, setSelectedCategory, setActiveFilterCategory, location } = useApp();
   const [showNotificationToast, setShowNotificationToast] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
 
   const getServiceIcon = (id: string) => {
     switch (id) {
@@ -47,6 +54,9 @@ export const Screen2Home: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col h-full bg-white text-slate-900 relative overflow-hidden">
+      {/* Contact Modal */}
+      <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
+
       {/* Toast popup */}
       {showNotificationToast && (
         <div className="absolute top-14 left-4 right-4 z-50 bg-slate-900 text-white text-xs p-3 rounded-xl shadow-xl flex items-center justify-between border border-slate-700 animate-fade-in">
@@ -99,6 +109,13 @@ export const Screen2Home: React.FC = () => {
                   <span>Active Service Tracking</span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </button>
+                <button
+                  onClick={() => { setMenuOpen(false); setContactModalOpen(true); }}
+                  className="w-full text-left px-3 py-2.5 rounded-lg text-sm text-blue-700 bg-blue-50/60 hover:bg-blue-100/60 font-semibold flex items-center justify-between"
+                >
+                  <span>Contact Founders / Support</span>
+                  <Mail className="w-4 h-4 text-blue-600" />
+                </button>
               </div>
             </div>
             <div className="pt-4 border-t border-slate-100">
@@ -116,7 +133,7 @@ export const Screen2Home: React.FC = () => {
       {/* Main Content Area (Scrollable) */}
       <div className="flex-1 overflow-y-auto px-5 pt-3 pb-14 overscroll-contain">
         {/* Top App Bar */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-3">
           <button
             onClick={() => setMenuOpen(true)}
             className="p-1.5 rounded-lg text-slate-700 hover:bg-slate-100 transition"
@@ -125,34 +142,103 @@ export const Screen2Home: React.FC = () => {
             <Menu className="w-6 h-6 stroke-[2]" />
           </button>
 
-          <button
-            onClick={() => setShowNotificationToast(true)}
-            className="p-1.5 rounded-lg text-slate-700 hover:bg-slate-100 transition relative"
-            aria-label="Notifications"
-          >
-            <Bell className="w-6 h-6 stroke-[2]" />
-            <span className="w-2 h-2 rounded-full bg-blue-600 absolute top-1.5 right-1.5 ring-2 ring-white"></span>
-          </button>
+          <div className="flex items-center space-x-1">
+            <button
+              onClick={() => setContactModalOpen(true)}
+              className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50 transition"
+              title="Contact Support & Founders"
+            >
+              <Mail className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setShowNotificationToast(true)}
+              className="p-1.5 rounded-lg text-slate-700 hover:bg-slate-100 transition relative"
+              aria-label="Notifications"
+            >
+              <Bell className="w-6 h-6 stroke-[2]" />
+              <span className="w-2 h-2 rounded-full bg-blue-600 absolute top-1.5 right-1.5 ring-2 ring-white"></span>
+            </button>
+          </div>
         </div>
 
         {/* Greeting & Location */}
-        <div className="mb-5">
+        <div className="mb-3">
           <h2 className="text-[22px] font-bold text-slate-900 tracking-tight">
             Hello, Ananya!
           </h2>
           <div className="flex items-center gap-1.5 text-xs text-slate-600 mt-1">
-            <span className="text-blue-600">👥</span>
+            <span className="text-blue-600">📍</span>
             <span>You're in {location}</span>
+          </div>
+        </div>
+
+        {/* UPFRONT UNIQUE VALUE PROPOSITION (UVP) BANNER */}
+        <div className="mb-4 p-3.5 rounded-2xl bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white shadow-md">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <Sparkles className="w-4 h-4 text-amber-300" />
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-blue-200">
+              India's 1st Verified Assistance Platform
+            </span>
+          </div>
+          <p className="text-xs text-blue-100 leading-relaxed font-medium">
+            Compassionate, background-checked neighborhood helpers for hospital visits, prescription pickup, and heavy tasks.
+          </p>
+          <div className="grid grid-cols-3 gap-1.5 mt-3 pt-2.5 border-t border-blue-700/60 text-center">
+            <div className="flex flex-col items-center">
+              <ShieldCheck className="w-4 h-4 text-emerald-400 mb-0.5" />
+              <span className="text-[9px] font-bold text-white">100% Verified</span>
+            </div>
+            <div className="flex flex-col items-center border-x border-blue-700/60">
+              <Clock className="w-4 h-4 text-amber-300 mb-0.5" />
+              <span className="text-[9px] font-bold text-white">8-Min Dispatch</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <HeartHandshake className="w-4 h-4 text-pink-300 mb-0.5" />
+              <span className="text-[9px] font-bold text-white">Fair Honorarium</span>
+            </div>
           </div>
         </div>
 
         {/* Big Request Help Button */}
         <button
           onClick={() => navigateTo('3-request')}
-          className="w-full py-3.5 px-4 rounded-xl bg-[#1E56DE] hover:bg-[#1846b8] active:scale-[0.99] text-white text-sm font-semibold tracking-wide shadow-md shadow-blue-500/20 transition-all mb-6 cursor-pointer"
+          className="w-full py-3.5 px-4 rounded-xl bg-[#1E56DE] hover:bg-[#1846b8] active:scale-[0.99] text-white text-sm font-semibold tracking-wide shadow-md shadow-blue-500/20 transition-all mb-5 cursor-pointer"
         >
           Request Help
         </button>
+
+        {/* VISUAL INFOGRAPHIC: HOW TRUST AID WORKS */}
+        <div className="mb-6 p-3.5 bg-slate-50 border border-slate-200/90 rounded-2xl">
+          <div className="flex items-center justify-between mb-2.5">
+            <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+              How Trust Aid Works
+            </h3>
+            <span className="text-[10px] text-blue-600 font-bold">3 Simple Steps</span>
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs">
+              <div className="w-7 h-7 mx-auto rounded-full bg-blue-50 text-blue-600 font-extrabold text-xs flex items-center justify-center mb-1">
+                1
+              </div>
+              <span className="text-[10px] font-bold text-slate-800 block leading-tight">Choose Service</span>
+              <span className="text-[9px] text-slate-500 block mt-0.5">Set fair price</span>
+            </div>
+            <div className="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs">
+              <div className="w-7 h-7 mx-auto rounded-full bg-blue-50 text-blue-600 font-extrabold text-xs flex items-center justify-center mb-1">
+                2
+              </div>
+              <span className="text-[10px] font-bold text-slate-800 block leading-tight">Helper Accepts</span>
+              <span className="text-[9px] text-slate-500 block mt-0.5">Police verified</span>
+            </div>
+            <div className="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs">
+              <div className="w-7 h-7 mx-auto rounded-full bg-blue-50 text-blue-600 font-extrabold text-xs flex items-center justify-center mb-1">
+                3
+              </div>
+              <span className="text-[10px] font-bold text-slate-800 block leading-tight">Live Track</span>
+              <span className="text-[9px] text-slate-500 block mt-0.5">Doorstep care</span>
+            </div>
+          </div>
+        </div>
 
         {/* Quick Services Section */}
         <div className="mb-6">
@@ -183,13 +269,16 @@ export const Screen2Home: React.FC = () => {
                 <span className="text-[11px] font-semibold text-slate-700 leading-tight">
                   {cat.name}
                 </span>
+                <span className="text-[9px] font-bold text-blue-600 mt-1">
+                  ₹{cat.basePrice}
+                </span>
               </button>
             ))}
           </div>
         </div>
 
         {/* Nearby Verified Helpers Section */}
-        <div>
+        <div className="mb-6">
           <h3 className="text-sm font-bold text-slate-800 mb-2.5">
             Nearby Verified Helpers
           </h3>
@@ -225,6 +314,37 @@ export const Screen2Home: React.FC = () => {
             </div>
 
             <ChevronRight className="w-5 h-5 text-slate-400" />
+          </div>
+        </div>
+
+        {/* FOUNDER & CONTACT DETAILS SHOWCASE SECTION */}
+        <div className="p-4 rounded-2xl bg-blue-50/60 border border-blue-200/80 mb-2">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-1.5">
+              <Mail className="w-4 h-4 text-blue-600" />
+              <h4 className="text-xs font-bold text-slate-900">Student Founders & Support</h4>
+            </div>
+            <button
+              onClick={() => setContactModalOpen(true)}
+              className="text-[10px] font-bold text-blue-700 hover:underline"
+            >
+              Open Form →
+            </button>
+          </div>
+          <p className="text-[11px] text-slate-600 mb-2.5">
+            College Startup Pitch · RGUKT Nuzvid Innovation Team
+          </p>
+          <div className="space-y-1.5">
+            {['n220949@rguktn.ac.in', 'n220626@rguktn.ac.in', 'n220876@rguktn.ac.in'].map((email) => (
+              <a
+                key={email}
+                href={`mailto:${email}?subject=Trust%20Aid%20Inquiry`}
+                className="flex items-center justify-between p-2 rounded-xl bg-white border border-blue-100 hover:border-blue-400 text-xs transition"
+              >
+                <span className="font-mono text-[11px] font-bold text-slate-800">{email}</span>
+                <span className="text-[10px] text-blue-600 font-semibold">Email us</span>
+              </a>
+            ))}
           </div>
         </div>
       </div>

@@ -177,8 +177,8 @@ export const Screen1Login: React.FC = () => {
         </form>
       </div>
 
-      {/* Footer Legal */}
-      <div className="w-full text-center mt-4">
+      {/* Footer Legal & Founder Contacts */}
+      <div className="w-full text-center mt-4 space-y-2">
         <p className="text-[11px] text-slate-400 leading-relaxed px-4">
           By continuing, you agree to our{' '}
           <span className="text-slate-600 underline cursor-pointer hover:text-blue-600">
@@ -190,6 +190,18 @@ export const Screen1Login: React.FC = () => {
           </span>
           .
         </p>
+
+        {/* Student Founders Pitch Credit */}
+        <div className="pt-2 border-t border-slate-100 text-[10px] text-slate-500">
+          <span className="font-semibold text-slate-700">RGUKT Nuzvid Startup Pitch</span>
+          <div className="flex flex-wrap justify-center gap-x-2 gap-y-0.5 mt-1 font-mono text-[10px] text-blue-600">
+            <a href="mailto:n220949@rguktn.ac.in" className="hover:underline">n220949@rguktn.ac.in</a>
+            <span>•</span>
+            <a href="mailto:n220626@rguktn.ac.in" className="hover:underline">n220626@rguktn.ac.in</a>
+            <span>•</span>
+            <a href="mailto:n220876@rguktn.ac.in" className="hover:underline">n220876@rguktn.ac.in</a>
+          </div>
+        </div>
       </div>
     </div>
   );
